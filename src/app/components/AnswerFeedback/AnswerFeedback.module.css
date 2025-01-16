@@ -1,0 +1,10 @@
+.feedbackContainer {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.feedbackText {
+    margin-bottom: 10px;
+    font-size: 1.2rem;
+    color: #333;
+}

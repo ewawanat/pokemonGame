@@ -1,0 +1,41 @@
+.controlsContainer {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.controlButton {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-size: 1rem;
+}
+
+.controlButton:hover {
+    background-color: #0056b3;
+}
+
+.controlButton:active {
+    background-color: #003f7f;
+}
+
+.score {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #333;
+    margin-top: 10px;
+}
+
+.results {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.finalScore {
+    font-size: 1.5rem;
+    color: #007bff;
+    margin-bottom: 10px;
+}

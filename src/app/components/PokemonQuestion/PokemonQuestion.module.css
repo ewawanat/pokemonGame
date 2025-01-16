@@ -1,0 +1,50 @@
+.container {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.imageContainer {
+    position: relative;
+    width: 200px;
+    height: 200px;
+    /* Fixed height to prevent layout shifts */
+    margin: 0 auto;
+    overflow: hidden;
+    /* Ensure the image doesn't overflow */
+}
+
+.image {
+    object-fit: contain;
+    /* Ensure the image scales to fit within the container without stretching */
+}
+
+.silhouette {
+    filter: brightness(0);
+    object-fit: contain;
+    /* Ensure silhouette image also scales properly */
+}
+
+.optionsContainer {
+    margin-top: 20px;
+}
+
+.optionButton {
+    margin: 5px;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-size: 1rem;
+}
+
+.optionButton:hover:not(:disabled) {
+    background-color: #0056b3;
+}
+
+.optionButton:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+}
