@@ -96,8 +96,8 @@ describe('transformPokemonData', () => {
         const expectedTransformedData = [
             {
                 name: 'squirtle',
-                image: '',
-                silhouette: '',
+                image: 'default-image-url',
+                silhouette: 'default-image-url',
             },
         ];
 

@@ -1,7 +1,8 @@
 import React from 'react';
 import Image from 'next/image';
-import styles from './PokemonQuestion.module.css';
 import { Pokemon } from '../../models/Pokemon';
+
+import styles from './PokemonQuestion.module.css';
 
 type PokemonQuestionProps = {
     currentPokemon: Pokemon;
@@ -21,7 +22,7 @@ const PokemonQuestion: React.FC<PokemonQuestionProps> = ({
             <div className={styles.imageContainer}>
                 <Image
                     src={showAnswer ? currentPokemon.image : currentPokemon.silhouette}
-                    alt="Who's that Pokémon?"
+                    alt={showAnswer ? currentPokemon.name : 'silhouette of a pokemon'}
                     width={200}
                     height={200}
                     className={showAnswer ? styles.image : styles.silhouette}

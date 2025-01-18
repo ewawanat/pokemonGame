@@ -1,0 +1,45 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`PokemonQuestion Component matches the snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="container"
+  >
+    <div
+      class="imageContainer"
+    >
+      <img
+        alt="silhouette of a pokemon"
+        class="silhouette"
+        height="200"
+        src="http://localhost/images/pikachu-silhouette.png"
+        width="200"
+      />
+    </div>
+    <div
+      class="optionsContainer"
+    >
+      <button
+        class="optionButton"
+      >
+        Pikachu
+      </button>
+      <button
+        class="optionButton"
+      >
+        Bulbasaur
+      </button>
+      <button
+        class="optionButton"
+      >
+        Charmander
+      </button>
+      <button
+        class="optionButton"
+      >
+        Squirtle
+      </button>
+    </div>
+  </div>
+</DocumentFragment>
+`;

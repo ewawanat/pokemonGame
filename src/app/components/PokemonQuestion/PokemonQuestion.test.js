@@ -1,7 +1,14 @@
-import { render, screen, fireEvent } from '@testing-library/react';
+import '@testing-library/jest-dom';
+import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import { axe, toHaveNoViolations } from 'jest-axe';
+
 import PokemonQuestion from './PokemonQuestion';
 
-// Mocking the Image component from Next.js
+// Extend Jest with accessibility matcher
+expect.extend(toHaveNoViolations);
+
+// tell Jest to replace the next/image module with the mock definition.
 jest.mock('next/image', () => ({
     __esModule: true,
     default: ({ src, alt, width, height, className }) => (
@@ -13,25 +20,12 @@ describe('PokemonQuestion Component', () => {
     const mockHandleAnswer = jest.fn();
     const pokemon = {
         name: 'Pikachu',
-        image: '/images/pikachu.png',
-        silhouette: '/images/pikachu-silhouette.png',
+        image: 'http://localhost/images/pikachu.png',
+        silhouette: 'http://localhost/images/pikachu-silhouette.png',
     };
 
     const options = ['Pikachu', 'Bulbasaur', 'Charmander', 'Squirtle'];
-
-    // We render the component only once and reuse it in each test to avoid redundant rendering
-    // const renderComponent = (showAnswer) => {
-    //     render(
-    //         <PokemonQuestion
-    //             currentPokemon={pokemon}
-    //             options={options}
-    //             showAnswer={showAnswer}
-    //             handleAnswer={mockHandleAnswer}
-    //         />
-    //     );
-    // };
-
-    it.only('renders the silhouette when showAnswer is false', () => {
+    it('renders the silhouette when showAnswer is false', () => {
         render(
             <PokemonQuestion
                 currentPokemon={pokemon}
@@ -40,53 +34,142 @@ describe('PokemonQuestion Component', () => {
                 handleAnswer={mockHandleAnswer}
             />
         );
-        screen.logTestingPlaygroundURL()
-
-
-        const image = screen.getByAltText("Who's that Pokémon?");
-        expect(image).toHaveAttribute('src', pokemon.silhouette);
+        const image = screen.getByAltText('silhouette of a pokemon');
+        expect(image).toHaveProperty('src', pokemon.silhouette);
     });
 
     it('renders the actual image when showAnswer is true', () => {
-        renderComponent(true);
-
-        const image = screen.getByAltText("Who's that Pokémon?");
-        expect(image).toHaveAttribute('src', pokemon.image);
+        render(
+            <PokemonQuestion
+                currentPokemon={pokemon}
+                options={options}
+                showAnswer={true}
+                handleAnswer={mockHandleAnswer}
+            />
+        );
+        const image = screen.getByAltText('Pikachu');
+        expect(image).toHaveProperty('src', pokemon.image);
     });
 
     it('renders all options as buttons', () => {
-        renderComponent(false);
+        render(
+            <PokemonQuestion
+                currentPokemon={pokemon}
+                options={options}
+                showAnswer={false}
+                handleAnswer={mockHandleAnswer}
+            />
+        );
+        const pikachuButton = screen.getByRole('button', { name: /pikachu/i });
+        const bulbasaurButton = screen.getByRole('button', { name: /bulbasaur/i });
 
-        options.forEach((option) => {
-            const button = screen.getByText(option);
-            expect(button).toBeInTheDocument();
-        });
+        const charmanderButton = screen.getByRole('button', { name: /charmander/i });
+
+        const squirtleButton = screen.getByRole('button', { name: /squirtle/i });
+
+        expect(pikachuButton).toBeInTheDocument();
+        expect(bulbasaurButton).toBeInTheDocument();
+        expect(charmanderButton).toBeInTheDocument();
+        expect(squirtleButton).toBeInTheDocument();
+
     });
 
-    it('calls handleAnswer with the selected option when a button is clicked', () => {
-        renderComponent(false);
+    it('calls handleAnswer with the selected option when a button is clicked', async () => {
+        render(
+            <PokemonQuestion
+                currentPokemon={pokemon}
+                options={options}
+                showAnswer={false}
+                handleAnswer={mockHandleAnswer}
+            />
+        );
 
         const button = screen.getByText('Pikachu');
-        fireEvent.click(button);
+        await userEvent.click(button);
 
         expect(mockHandleAnswer).toHaveBeenCalledWith('Pikachu');
     });
 
     it('disables the buttons when showAnswer is true', () => {
-        renderComponent(true);
+        render(
+            <PokemonQuestion
+                currentPokemon={pokemon}
+                options={options}
+                showAnswer={true}
+                handleAnswer={mockHandleAnswer}
+            />
+        );
 
-        options.forEach((option) => {
-            const button = screen.getByText(option);
-            expect(button).toBeDisabled();
-        });
+        const pikachuButton = screen.getByRole('button', { name: /pikachu/i });
+        const bulbasaurButton = screen.getByRole('button', { name: /bulbasaur/i });
+        const charmanderButton = screen.getByRole('button', { name: /charmander/i });
+        const squirtleButton = screen.getByRole('button', { name: /squirtle/i });
+
+        expect(pikachuButton).toBeDisabled();
+        expect(bulbasaurButton).toBeDisabled();
+        expect(charmanderButton).toBeDisabled();
+        expect(squirtleButton).toBeDisabled();
     });
 
     it('does not disable the buttons when showAnswer is false', () => {
-        renderComponent(false);
+        render(
+            <PokemonQuestion
+                currentPokemon={pokemon}
+                options={options}
+                showAnswer={false}
+                handleAnswer={mockHandleAnswer}
+            />
+        );
 
-        options.forEach((option) => {
-            const button = screen.getByText(option);
-            expect(button).not.toBeDisabled();
-        });
+
+        const pikachuButton = screen.getByRole('button', { name: /pikachu/i });
+        const bulbasaurButton = screen.getByRole('button', { name: /bulbasaur/i });
+        const charmanderButton = screen.getByRole('button', { name: /charmander/i });
+        const squirtleButton = screen.getByRole('button', { name: /squirtle/i });
+
+        expect(pikachuButton).not.toBeDisabled();
+        expect(bulbasaurButton).not.toBeDisabled();
+        expect(charmanderButton).not.toBeDisabled();
+        expect(squirtleButton).not.toBeDisabled();
+    });
+    it('has no accessibility violations when showAnswer is false', async () => {
+        const { container } = render(
+            <PokemonQuestion
+                currentPokemon={pokemon}
+                options={options}
+                showAnswer={false}
+                handleAnswer={mockHandleAnswer}
+            />
+        );
+
+        const results = await axe(container);
+        expect(results).toHaveNoViolations();
+    });
+
+    it('has no accessibility violations when showAnswer is true', async () => {
+        const { container } = render(
+            <PokemonQuestion
+                currentPokemon={pokemon}
+                options={options}
+                showAnswer={true}
+                handleAnswer={mockHandleAnswer}
+            />
+        );
+
+        const results = await axe(container);
+        expect(results).toHaveNoViolations();
+    });
+    it('matches the snapshot', () => {
+
+        const { asFragment } = render(
+            <PokemonQuestion
+                currentPokemon={pokemon}
+                options={options}
+                showAnswer={false}
+                handleAnswer={mockHandleAnswer}
+            />
+        );
+
+        expect(asFragment()).toMatchSnapshot();
     });
 });

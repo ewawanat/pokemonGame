@@ -1,0 +1,29 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AnswerFeedback Component matches the snapshot when the answer is correct 1`] = `
+<DocumentFragment>
+  <div
+    class="feedbackContainer"
+  >
+    <p
+      class="feedbackText"
+    >
+      Correct! It was A.
+    </p>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`AnswerFeedback Component matches the snapshot when the answer is incorrect 1`] = `
+<DocumentFragment>
+  <div
+    class="feedbackContainer"
+  >
+    <p
+      class="feedbackText"
+    >
+      Wrong! It was A.
+    </p>
+  </div>
+</DocumentFragment>
+`;

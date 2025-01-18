@@ -9,6 +9,7 @@ type GameControlsProps = {
     correctAnswers: number;
     startGame: () => void;
     finishGame: () => void;
+    questionsAnswered: number;
 };
 
 const GameControls: React.FC<GameControlsProps> = ({
@@ -36,7 +37,9 @@ const GameControls: React.FC<GameControlsProps> = ({
             {isGameFinished && (
                 <div className={styles.results}>
                     <h2 className={styles.finalScore}>Final Score: {score}</h2>
-                    <p>Correct Answers: {correctAnswers} / {totalQuestions}</p>
+                    <p>
+                        Correct Answers: {correctAnswers} / {totalQuestions}
+                    </p>
                     <p>Percentage: {calculatePercentage()}%</p>
                 </div>
             )}

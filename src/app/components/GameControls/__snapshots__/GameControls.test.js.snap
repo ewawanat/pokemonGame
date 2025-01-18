@@ -1,0 +1,54 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`GameControls Component matches the snapshot when the game is finished 1`] = `
+<DocumentFragment>
+  <div
+    class="controlsContainer"
+  >
+    <button
+      class="controlButton"
+    >
+      Start Game
+    </button>
+    <p
+      class="score"
+    >
+      Score: 80
+    </p>
+    <div
+      class="results"
+    >
+      <h2
+        class="finalScore"
+      >
+        Final Score: 80
+      </h2>
+      <p>
+        Correct Answers: 8 / 10
+      </p>
+      <p>
+        Percentage: 80.00%
+      </p>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`GameControls Component matches the snapshot when the game is not started 1`] = `
+<DocumentFragment>
+  <div
+    class="controlsContainer"
+  >
+    <button
+      class="controlButton"
+    >
+      Start Game
+    </button>
+    <p
+      class="score"
+    >
+      Score: 0
+    </p>
+  </div>
+</DocumentFragment>
+`;

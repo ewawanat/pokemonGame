@@ -20,9 +20,14 @@ export type Pokemon = {
 };
 
 export const transformPokemonData = (apiPokemonData: PokemonApiResponse[]): Pokemon[] => {
-    return apiPokemonData.map((anApiPokemon: PokemonApiResponse) => ({
-        name: anApiPokemon.name,
-        image: anApiPokemon.sprites.other['official-artwork'].front_default,
-        silhouette: anApiPokemon.sprites.other['official-artwork'].front_default,
-    }));
+    return apiPokemonData.map((anApiPokemon: PokemonApiResponse) => {
+        const image = anApiPokemon.sprites?.other?.['official-artwork']?.front_default || 'default-image-url';
+        const silhouette = image; // silhouette is the same as the image
+
+        return {
+            name: anApiPokemon.name ? anApiPokemon.name : 'No name',
+            image,
+            silhouette,
+        };
+    });
 };
